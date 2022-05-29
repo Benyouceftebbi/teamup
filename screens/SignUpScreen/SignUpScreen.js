@@ -5,6 +5,7 @@ import CustomButton from '../../components/CustomButton';
 import SocialSignInButtons from '../../components/SocialSignInButtons';
 import {useNavigation} from '@react-navigation/native';
 import CustomMultiPicker from "react-native-multiple-select-list";
+import { auth } from '../../Firebase'
 
 const SportList = {
   "1":"Football",
@@ -27,7 +28,7 @@ const SignUpScreen = () => {
  const onSignInPress = () => navigation.navigate("Signin")
   
 
-  
+
 
   const onTermsOfUsePressed = () => {
     console.warn('onTermsOfUsePressed');
@@ -36,6 +37,15 @@ const SignUpScreen = () => {
   const onPrivacyPressed = () => {
     console.warn('onPrivacyPressed');
   };
+  const handleSignUp = () => {
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(userCredentials => {
+        const user = userCredentials.user;
+        console.log('Registered with:', user.email);
+      })
+      .catch(error => alert(error.message))
+  }
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -80,12 +90,8 @@ const SignUpScreen = () => {
     
 
 
-        <CustomButton text="Register" onPress={onRegisterPressed} />
-        <CustomButton
-          text="Have an account? Sign in"
-          onPress={onSignInPress}
-          type="TERTIARY"
-        />
+        <CustomButton text="Register" onPress={handleSignUp} />
+        <CustomButton text="Have an account? Sign in"onPress={onSignInPress}type="TERTIARY"/>
 
         <Text style={styles.text}>
           By registering, you confirm that you accept our{' '}

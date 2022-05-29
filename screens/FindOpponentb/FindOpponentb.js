@@ -4,7 +4,9 @@ import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {useNavigation} from '@react-navigation/native';
-
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { Input } from 'react-native-elements';
+import { useEffect, useRef } from 'react';
 
 const FindOpponentb = () => {
   const navigation = useNavigation();
@@ -29,7 +31,10 @@ const FindOpponentb = () => {
     showMode('time');
   };
  
-  const onAddmatchfPressed = () => navigation.navigate("Addmatchb");
+  const onFindMatchPressed = () => {
+    console.warn('match found');
+  };
+
    
  
   
@@ -52,8 +57,36 @@ const FindOpponentb = () => {
           onChange={onChange}
         />
       )}
-      <CustomButton text="Find Opponent" 
-          />
+       <View >
+       <GooglePlacesAutocomplete
+      placeholder='Search'
+      onPress={(data, details = null) => {
+        // 'details' is provided when fetchDetails = true
+        console.log(data, details);
+      }}
+      query={{
+        key: 'YOUR API KEY',
+        language: 'en',
+        components: 'country:us',
+      }}
+      textInputProps={{
+        InputComp: Input,
+        errorStyle: { color: 'red' },
+      }}
+ 
+    />
+     
+     
+       
+      </View>
+      
+     <View>
+     <CustomButton text="Find Opponent" onPress={onFindMatchPressed} />
+    </View>
+       
+     
+
+   
     </View>
 
     </ScrollView>

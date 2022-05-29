@@ -10,9 +10,9 @@ import { FlatList } from 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import CustomButton from '../../components/CustomButton';
 
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/core';
 import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
-
+import { auth } from '../../Firebase';
 
 
 
@@ -29,6 +29,14 @@ const  Homepage = () =>{
    const onFindOpponentPressed = () => navigation.navigate("FindOpponent");
    const onFindTeamPressed = () => navigation.navigate("FindTeam")
    const onCreateTeamPressed = () => navigation.navigate("CreateTeam")
+   const handleSignOut = () => {
+    auth
+      .signOut()
+      .then(() => {
+        navigation.replace("Signin")
+      })
+      .catch(error => alert(error.message))
+  }
     return (
       <View style = {styles.container}>  
          
@@ -60,8 +68,9 @@ const  Homepage = () =>{
               <CustomButton text="Find an Opponent ⚔️" onPress={onFindOpponentPressed} />
               <CustomButton text="Find a team ⛹️" onPress={onFindTeamPressed} />
               <CustomButton text="Create a team ⛹️" onPress={onCreateTeamPressed} />
+              <CustomButton text="Sign out" onPress={handleSignOut} />
             
-
+ 
           </ScrollView>
       </View>
       

@@ -1,19 +1,18 @@
-import React, {useState} from 'react';
+import React, {useEffect,useState} from 'react';
 import {View,Text,Image,StyleSheet,useWindowDimensions,ScrollView} from 'react-native';
-
+import {useNavigation} from '@react-navigation/native';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import SocialSignInButtons from '../../components/SocialSignInButtons';
-import {useNavigation} from '@react-navigation/native';
+import { auth } from '../../Firebase'
 
 
 
-const SignInScreen = (
-  
-) => {
+const SignInScreen = () => {
  
 
-  const [username, setUsername] = useState('');
+
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const {height} = useWindowDimensions();
   const navigation = useNavigation();
@@ -27,10 +26,24 @@ const SignInScreen = (
     navigation.navigate("Forgot password?")
   };
     
-  
+  const handleLogin = () => {
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then(userCredentials => {
+        const user = userCredentials.user;
+        console.log('Logged in with:', user.email);
+      })
+      .catch(error => alert(error.message))
+  }
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        navigation.replace("Home")
+      }
+    })
 
-  
-
+    return unsubscribe
+  }, [])
 
   
 
@@ -40,9 +53,9 @@ const SignInScreen = (
       <Image style={{width: '70%', maxWidth: 300,maxHeight: 200,}} source={require('../../assets/images/teamup.jpg')} />
 
         <CustomInput
-          placeholder="Username"
-          value={username}
-          setValue={setUsername}
+          placeholder="email"
+          value={email}
+          setValue={setEmail}
         />
         <CustomInput
           placeholder="Password"
@@ -51,7 +64,7 @@ const SignInScreen = (
           secureTextEntry
         />
 
-        <CustomButton text="Sign In" onPress={onSignInPressed} />
+        <CustomButton text="Sign In" onPress={handleLogin} />
 
         <CustomButton
           text="Forgot password?"
@@ -76,9 +89,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
   },
-  logo: {
-    
-  },
+
 });
 
 export default SignInScreen;
