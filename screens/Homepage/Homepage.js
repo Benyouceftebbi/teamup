@@ -66,7 +66,7 @@ const  Homepage = () =>{
         <ScrollView style={{flex:1}}>
             <Text style={{fontSize:20,fontWeight:'bold',textAlign:'center'}}>WELCOME!</Text>
               <CustomButton text="Find an Opponent ⚔️" onPress={onFindOpponentPressed} />
-              <CustomButton text="Find a team ⛹️" onPress={onFindTeamPressed} />
+             
               <CustomButton text="Create a team ⛹️" onPress={onCreateTeamPressed} />
               <CustomButton text="Sign out" onPress={handleSignOut} />
             

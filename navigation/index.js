@@ -14,15 +14,14 @@ import SurveyScreen from "../screens/SurveyScreen/SurveyScreen"
 import FindOpponentf from "../screens/FindOpponentf/FindOpponentf"
 import FindOpponentb from "../screens/FindOpponentb/FindOpponentb"
 import FindOpponentt from "../screens/FindOpponentt/FindOpponentt"
-import FindTeamScreen from "../screens/FindTeamScreen/FindTeamScreen"
+
 import CreateTeamScreen from "../screens/CreateTeamScreen/CreateTeam"
 import Addmatchf from "../screens/FindOpponentf/AddMatchF/Addmatchf"
 import Addmatchb from "../screens/FindOpponentb/Addmatchb/Addmatchb"
 import Addmatcht from "../screens/FindOpponentt/AddMatcht/Addmatcht"
 import CreateFTeam from "../screens/CreateTeamScreen/CreateFTeam"
 import CreateBTeam from "../screens/CreateTeamScreen/CreateBTeam"
-import FindBTeam from '../screens/FindTeamScreen/FindBTeam';
-import FindFTeam from '../screens/FindTeamScreen/FindFTeam'
+
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
@@ -41,15 +40,14 @@ const Navigation = () => {
           <Stack.Screen name="Football" component={FindOpponentf}/>
           <Stack.Screen name="Basketball" component={FindOpponentb}/>
           <Stack.Screen name="Tennis" component={FindOpponentt}/>
-          <Stack.Screen name="FindTeam" component={FindTeamScreen}/>
+         
           <Stack.Screen name="CreateTeam" component={CreateTeamScreen}/>
           <Stack.Screen name="Addmatchf" component={Addmatchf}/>
           <Stack.Screen name="Addmatchb" component={Addmatchb}/>
           <Stack.Screen name="Addmatcht" component={Addmatcht}/>     
           <Stack.Screen name="CreateFteam" component={CreateFTeam}/>   
           <Stack.Screen name="CreateBteam" component={CreateBTeam}/> 
-          <Stack.Screen name="FindFteam" component={FindFTeam}/>   
-          <Stack.Screen name="FindBteam" component={FindBTeam}/>
+     
       </Stack.Navigator>
     </NavigationContainer>
     );

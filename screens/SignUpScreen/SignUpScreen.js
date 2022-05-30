@@ -6,6 +6,8 @@ import SocialSignInButtons from '../../components/SocialSignInButtons';
 import {useNavigation} from '@react-navigation/native';
 import CustomMultiPicker from "react-native-multiple-select-list";
 import { auth } from '../../Firebase'
+import { db } from '../../Firebase';
+import {collection, getDocs } from 'firebase/firestore';
 
 const SportList = {
   "1":"Football",
@@ -45,6 +47,35 @@ const SignUpScreen = () => {
         console.log('Registered with:', user.email);
       })
       .catch(error => alert(error.message))
+  }
+  const setData = async () =>{
+    const nname = name;
+    const ssurname = surname;
+    const aage = age;
+    const uusername = username;
+    const eemail = email;
+    const ppassword=password;
+
+
+   
+    
+    db.collection("Users").doc(uusername).set({
+     name : nname,
+     surname: ssurname,
+     age : aage,
+     username : uusername,
+     email : eemail,
+     password : ppassword
+     
+    
+  })
+  .then(() => {
+      console.log("User successfully added!");
+  })
+  .catch((error) => {
+      console.error("Error writing document: ", error);
+  });
+
   }
 
   return (
@@ -89,8 +120,8 @@ const SignUpScreen = () => {
        
     
 
-
-        <CustomButton text="Register" onPress={handleSignUp} />
+        <CustomButton text="Confirm" onPress={setData}  />
+        <CustomButton text="Register" onPress={handleSignUp}  />
         <CustomButton text="Have an account? Sign in"onPress={onSignInPress}type="TERTIARY"/>
 
         <Text style={styles.text}>

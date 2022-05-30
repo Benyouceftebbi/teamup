@@ -7,96 +7,75 @@ import {useNavigation} from '@react-navigation/native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { Input } from 'react-native-elements';
 import { useEffect, useRef } from 'react';
-
+import DatePicker from 'react-native-datepicker';
 const FindOpponentb = () => {
-  const navigation = useNavigation();
-  const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setShow(false);
-    setDate(currentDate);
-  };
+  const [date, setDate] = useState('09-10-2021');
 
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-  const showDatepicker = () => {
-    showMode('date');
-  };
-
-  const showTimepicker = () => {
-    showMode('time');
-  };
- 
-  const onFindMatchPressed = () => {
-    console.warn('match found');
-  };
-
-   
- 
-  
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-    <View style={styles.root}>
-      <View >
-        <Button onPress={showDatepicker} title="Pick a date!" />
-      </View>
-      <View>
-        <Button onPress={showTimepicker} title="Pick a time!" />
-      </View>
-      <Text>{date.toLocaleString()}</Text>
-      {show && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode={mode}
-          is24Hour={true}
-          onChange={onChange}
-        />
-      )}
-       <View >
-       <GooglePlacesAutocomplete
-      placeholder='Search'
-      onPress={(data, details = null) => {
-        // 'details' is provided when fetchDetails = true
-        console.log(data, details);
+  
+  <View style={styles.container}>
+    <Text style={styles.text}>choose a date :</Text>
+    <DatePicker
+      style={styles.datePickerStyle}
+      date={date}
+      mode="date"
+      placeholder="select date"
+      format="DD/MM/YYYY"
+      minDate="01-01-1900"
+      maxDate="01-01-2000"
+      confirmBtnText="Confirm"
+      cancelBtnText="Cancel"
+      customStyles={{
+        dateIcon: {
+          position: 'absolute',
+          right: -5,
+          top: 4,
+          marginLeft: 0,
+        },
+        dateInput: {
+          borderColor : "gray",
+          alignItems: "flex-start",
+          borderWidth: 0,
+          borderBottomWidth: 1,
+        },
+        placeholderText: {
+          fontSize: 17,
+          color: "gray"
+        },
+        dateText: {
+          fontSize: 17,
+        }
       }}
-      query={{
-        key: 'YOUR API KEY',
-        language: 'en',
-        components: 'country:us',
+      onDateChange={(date) => {
+        setDate(date);
       }}
-      textInputProps={{
-        InputComp: Input,
-        errorStyle: { color: 'red' },
-      }}
- 
     />
-     
-     
-       
-      </View>
+  </View>
+
       
-     <View>
-     <CustomButton text="Find Opponent" onPress={onFindMatchPressed} />
-    </View>
-       
-     
-
-   
-    </View>
-
-    </ScrollView>
   );
 };
 const styles = StyleSheet.create({
-  root: {
+  container: {
+    flex: 1,
+    padding: 10,
+    justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    backgroundColor : 'white'
   },
-  
+  title: {
+    textAlign: 'left',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  datePickerStyle: {
+    width: 230,
+  },
+  text: {
+    textAlign: 'left',
+    width: 230,
+    fontSize: 16,
+    color : "#000"
+  }
 });
 export default FindOpponentb;
